@@ -28,4 +28,12 @@
       "dest": "/assets/$1"
     }
   ]
+},
+{
+  "rewrites": [
+    {
+      "source": "/api/music",
+      "destination": "/api/music.js"
+    }
+  ]
 }
