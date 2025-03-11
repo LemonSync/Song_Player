@@ -11,32 +11,25 @@ const image = document.getElementById('cover'),
     background = document.getElementById('bg-img');
 
 const music = new Audio();
-let songs = [];
+let songs = []; // Akan diisi dari API
 let musicIndex = 0;
 let isPlaying = false;
 
-// Ambil daftar lagu dari backend
+// **Ambil daftar lagu dari API**
 async function fetchSongs() {
     try {
-        const response = await fetch('/api/music');
-        const data = await response.json();
-        console.log('Songs fetched:', data); // Debugging
-        return data;
+        const API_URL = window.location.origin + "/api/music";
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        songs = await response.json();
+        console.log("Fetched songs:", songs);
+        loadMusic(songs[musicIndex]); // Load lagu pertama
     } catch (error) {
-        console.error('Error fetching songs:', error);
-        return [];
+        console.error("Error fetching songs:", error);
     }
 }
 
-// Load lagu saat halaman pertama kali dijalankan
-async function initMusicPlayer() {
-    songs = await fetchSongs();
-    if (songs.length > 0) {
-        loadMusic(songs[musicIndex]);
-    }
-}
-
-// Fungsi untuk memainkan atau menjeda lagu
+// **Memainkan atau menghentikan musik**
 function togglePlay() {
     isPlaying ? pauseMusic() : playMusic();
 }
@@ -55,42 +48,41 @@ function pauseMusic() {
     music.pause();
 }
 
-// Fungsi untuk memuat lagu berdasarkan indeks
+// **Memuat lagu berdasarkan indeks**
 function loadMusic(song) {
     music.src = song.path;
     title.textContent = song.displayName;
     artist.textContent = song.artist;
     image.src = song.cover;
     background.src = song.cover;
-    music.load(); // Pastikan lagu ter-load sebelum diputar
 }
 
-// Fungsi untuk mengganti lagu
+// **Mengubah lagu**
 function changeMusic(direction) {
     musicIndex = (musicIndex + direction + songs.length) % songs.length;
     loadMusic(songs[musicIndex]);
     playMusic();
 }
 
-// Update progress bar dan waktu lagu
+// **Update progress bar**
 function updateProgressBar() {
     const { duration, currentTime } = music;
     const progressPercent = (currentTime / duration) * 100;
     progress.style.width = `${progressPercent}%`;
 
     const formatTime = (time) => String(Math.floor(time)).padStart(2, '0');
-    durationEl.textContent = `${formatTime(duration / 60)}:${formatTime(duration % 60)}`;
+    durationEl.textContent = duration ? `${formatTime(duration / 60)}:${formatTime(duration % 60)}` : '0:00';
     currentTimeEl.textContent = `${formatTime(currentTime / 60)}:${formatTime(currentTime % 60)}`;
 }
 
-// Geser progress bar untuk mengubah waktu lagu
+// **Set progress bar berdasarkan klik pengguna**
 function setProgressBar(e) {
     const width = playerProgress.clientWidth;
     const clickX = e.offsetX;
     music.currentTime = (clickX / width) * music.duration;
 }
 
-// Event listener untuk kontrol player
+// **Event Listeners**
 playBtn.addEventListener('click', togglePlay);
 prevBtn.addEventListener('click', () => changeMusic(-1));
 nextBtn.addEventListener('click', () => changeMusic(1));
@@ -98,5 +90,5 @@ music.addEventListener('ended', () => changeMusic(1));
 music.addEventListener('timeupdate', updateProgressBar);
 playerProgress.addEventListener('click', setProgressBar);
 
-// Jalankan pemutar musik saat pertama kali halaman dimuat
-initMusicPlayer();
+// **Mulai fetch lagu saat halaman dimuat**
+fetchSongs();
