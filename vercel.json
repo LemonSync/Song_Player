@@ -8,6 +8,14 @@
     {
       "src": "assets/*",
       "use": "@vercel/static"
+    },
+    {
+      "src": "style.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "index.js",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -18,6 +26,14 @@
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
+    },
+    {
+      "src": "/style.css",
+      "dest": "/style.css"
+    },
+    {
+      "src": "/index.js",
+      "dest": "/index.js"
     },
     {
       "src": "/api/music",
