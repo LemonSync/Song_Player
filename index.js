@@ -20,6 +20,7 @@ async function fetchSongs() {
     try {
         const response = await fetch('/api/music');
         const data = await response.json();
+        console.log('Songs fetched:', data); // Debugging
         return data;
     } catch (error) {
         console.error('Error fetching songs:', error);
