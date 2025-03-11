@@ -6,15 +6,15 @@
       "use": "@vercel/static"
     },
     {
-      "src": "assets/*",
-      "use": "@vercel/static"
-    },
-    {
       "src": "style.css",
       "use": "@vercel/static"
     },
     {
       "src": "index.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**/*",
       "use": "@vercel/static"
     },
     {
@@ -28,10 +28,6 @@
       "dest": "/index.html"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/assets/$1"
-    },
-    {
       "src": "/style.css",
       "dest": "/style.css"
     },
@@ -42,6 +38,10 @@
     {
       "src": "/api/music",
       "dest": "/api/music.js"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
     }
   ]
 }
