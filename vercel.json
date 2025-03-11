@@ -16,6 +16,10 @@
     {
       "src": "style.css",
       "use": "@vercel/static"
+    },
+    {
+      "src": "api/music.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -26,14 +30,10 @@
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
-    }
-  ]
-},
-{
-  "rewrites": [
+    },
     {
-      "source": "/api/music",
-      "destination": "/api/music.js"
+      "src": "/api/music",
+      "dest": "/api/music.js"
     }
   ]
 }
