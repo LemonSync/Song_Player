@@ -18,8 +18,8 @@
 </h3>
 
 <p align="center">
-  <img src="https://img.shields.io/github/repo-size/LemonSync/Music_Player?style=for-the-badge" />
-  <img src="https://img.shields.io/github/languages/count/LemonSync/Music_Player?style=for-the-badge" />
+  <img src="https://img.shields.io/github/repo-size/LemonSync/Song_Player?style=for-the-badge" />
+  <img src="https://img.shields.io/github/languages/count/LemonSync/Song_Player?style=for-the-badge" />
 </p>
 
 ---
